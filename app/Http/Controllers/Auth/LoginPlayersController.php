@@ -2,23 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Auth;
+use App\Players;
 
-class LoginController extends Controller
+class LoginPlayersController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
 
@@ -40,6 +33,16 @@ class LoginController extends Controller
     public function handleProviderCallback()
     {
         $user = Socialite::driver('vkontakte')->user();
-        dd($user);
+        $authUser = $this->findPlayer($user);
+        Auth::login($authUser, true);
+        return redirect($this->redirectTo());//что-то здесь не чисто
+    }
+
+    public function findPlayer($user)
+    {
+        $authPlayer = Players::where('vk_id_pl', $user->id)->first();
+        if ($authPlayer) {
+            return $authPlayer;
+        }
     }
 }

@@ -18,3 +18,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// OAuth Routes for Moders
+Route::get('login/vkontakte/moder', 'Auth\LoginModersController@redirectToProvider');
+Route::get('login/vkontakte/callback/moder', 'Auth\LoginModersController@handleProviderCallback');
+
+// OAuth Routes for Players
+Route::get('login/vkontakte/players', 'Auth\LoginPlayersController@redirectToProvider');
+Route::get('login/vkontakte/callback/players', 'Auth\LoginPlayersController@handleProviderCallback');
