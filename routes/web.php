@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,19 +9,19 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/main', function () {
+    return view('main');
 });
 
-Auth::routes();
+// OAuth Routes
+Route::get('login/vkontakte', 'Auth\LoginController@redirectToProvider');
+Route::get('/', 'Auth\LoginController@handleProviderCallback');
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Timer
+Route::post('/setTimer', 'ModersController@setTimer');
+Route::post('/stopTimer', 'ModersController@stopTimer');
 
-// OAuth Routes for Moders
-Route::get('login/vkontakte/moder', 'Auth\LoginModersController@redirectToProvider');
-Route::get('login/vkontakte/callback/moder', 'Auth\LoginModersController@handleProviderCallback');
+//Information about station
+Route::post('/setInfo', 'ModersController@setInfo');
 
-// OAuth Routes for Players
-Route::get('login/vkontakte/players', 'Auth\LoginPlayersController@redirectToProvider');
-Route::get('login/vkontakte/callback/players', 'Auth\LoginPlayersController@handleProviderCallback');
+Route::post('/getEnigma', 'PlayersController@getEnigma');

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlayersTable extends Migration
+class CreateZagadkiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreatePlayersTable extends Migration
      */
     public function up()
     {
-        Schema::create('players', function (Blueprint $table) {
-            $table->increments('id_pl');
-            $table->string('vk_id_pl');
-            $table->integer('com_pl');
-            $table->string('name_pl');
-            $table->boolean('status_user');
+        Schema::create('zagadki', function (Blueprint $table) {
+            $table->increments('id_zag');
+            $table->string('text_zag');
+            $table->string('img_zag');
         });
     }
 
@@ -29,6 +27,6 @@ class CreatePlayersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('players');
+        Schema::dropIfExists('zagadki');
     }
 }
